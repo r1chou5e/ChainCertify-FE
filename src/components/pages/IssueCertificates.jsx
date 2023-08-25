@@ -11,6 +11,8 @@ import {
   DialogBody,
   DialogFooter,
   Spinner,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 
 const IssueCertificates = () => {
@@ -18,10 +20,37 @@ const IssueCertificates = () => {
   const [gasFee, setGasFee] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [curInst, setCurInst] = useState("uit");
+  const certificateTypes = [
+    {
+      institution: "uit",
+      name: "UIT - University Of Information Technology",
+      types: [
+        "Associate's Degree",
+        "Bachelor's Degree",
+        "Master's Degree",
+        "Doctoral Degree",
+        "Professional Degrees",
+      ],
+    },
+    {
+      institution: "iig",
+      name: "IIG Vietnam",
+      types: [
+        "TOEIC Listening & Reading",
+        "TOEIC Speaking & Writing",
+        "TOEIC Bridge",
+      ],
+    },
+  ];
 
   const handleUploadFile = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+  };
+
+  const handleSelectInstitution = (event) => {
+    setCurInst(event);
   };
 
   const openModal = () => {
@@ -53,7 +82,7 @@ const IssueCertificates = () => {
           blockchain.
         </Typography>
       </div>
-      <div>
+      <div className="mb-7">
         <div className="flex justify-center gap-10">
           <Card
             className="h-auto w-[30%] mt-10 overflow-hidden p-8"
@@ -73,10 +102,20 @@ const IssueCertificates = () => {
                 icon={<i className="fas fa-user text-xs" />}
               />
               <Textarea label="Purpose" />
-              <Input
-                label="Certificate Type"
-                icon={<i className="fas fa-file text-xs" />}
-              />
+              <Select label="Institution" onChange={handleSelectInstitution}>
+                {certificateTypes.map((item, index) => (
+                  <Option value={item.institution}>{item.name}</Option>
+                ))}
+              </Select>
+              <Select label="Certificate Type">
+                {certificateTypes
+                  .find((item) => item.institution === curInst)
+                  ?.types.map((type, index) => (
+                    <Option key={index} value={type}>
+                      {type}
+                    </Option>
+                  ))}
+              </Select>
             </div>
           </Card>
           <Card

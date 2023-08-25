@@ -1,4 +1,12 @@
-import { Card, Typography, Button } from "@material-tailwind/react";
+import {
+  Card,
+  Typography,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from "@material-tailwind/react";
 
 const TABLE_HEAD = ["Name"];
 
@@ -57,7 +65,37 @@ function GetCertificates() {
                         {name}
                       </Typography>
                       <div className="ml-auto">
-                        <i className="fas fa-ellipsis-vertical text-gray-400"></i>
+                        <Menu>
+                          <MenuHandler>
+                            <i className="fas fa-ellipsis-vertical text-gray-400 p-1"></i>
+                          </MenuHandler>
+                          <MenuList>
+                            <MenuItem className="flex flex-row">
+                              <div className="my-auto">
+                                <i className="fas fa-share text-blue-gray-500 mr-1"></i>
+                              </div>
+                              <Typography
+                                variant="small"
+                                color="blue-gray-500"
+                                className="font-normal pl-2"
+                              >
+                                Share
+                              </Typography>
+                            </MenuItem>
+                            <MenuItem className="flex flex-row">
+                              <div className="my-auto">
+                                <i className="fas fa-trash text-red-500 mr-1"></i>
+                              </div>
+                              <Typography
+                                variant="small"
+                                color="red"
+                                className="font-normal pl-2"
+                              >
+                                Remove
+                              </Typography>
+                            </MenuItem>
+                          </MenuList>
+                        </Menu>
                       </div>
                     </td>
                   </tr>
