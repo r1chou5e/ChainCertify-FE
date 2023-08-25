@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   Typography,
@@ -9,6 +9,13 @@ import {
 } from "@material-tailwind/react";
 
 const IssueCertificates = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleUploadFile = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
   return (
     <div className="flex-col w-full">
       <div className="flex flex-col text-center py-10 pb-1">
@@ -56,10 +63,23 @@ const IssueCertificates = () => {
                 Choose a pdf file from your device
               </Typography>
             </div>
-            <div className="flex flex-col items-center justify-center h-full border-dashed border-2 border-blue-gray-300 p-4 mt-4 rounded-lg cursor-pointer">
-              <i className="fas fa-file-upload text-4xl text-blue-gray-400 mb-2" />
+            <div
+              className="flex flex-col items-center justify-center h-full border-dashed border-2 border-blue-gray-300 p-4 mt-4 rounded-lg cursor-pointer"
+              onClick={() => {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "application/pdf"; // Optionally set accepted file types
+                input.onchange = handleUploadFile;
+                input.click();
+              }}
+            >
+              <i
+                className={`fas fa-${
+                  selectedFile ? "check" : "file-upload"
+                } text-3xl text-blue-gray-400 mb-2`}
+              />
               <Typography color="gray" className="font-medium">
-                Upload file
+                {selectedFile ? selectedFile.name : "Upload file"}
               </Typography>
             </div>
           </Card>
@@ -82,7 +102,9 @@ const IssueCertificates = () => {
                 </Typography>
               }
             />
-            <Button color="blue" className="m-2">Confirm</Button>
+            <Button color="blue" className="m-2">
+              Confirm
+            </Button>
           </Card>
         </div>
       </div>
