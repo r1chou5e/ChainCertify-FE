@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/home/HomePage";
 import GetCertificates from "./components/pages/GetCertificates";
+import IssueCertificates from "./components/pages/IssueCertificates";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/get" element={<GetCertificates />} />
+          <Route path="/issue" element={<IssueCertificates />} />
         </Routes>
       </div>
     </div>
