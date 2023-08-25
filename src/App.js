@@ -8,10 +8,12 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/get" element={<GetCertificates />} />
-      </Routes>
+      <div className="flex justify-center">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/get" element={<GetCertificates />} />
+        </Routes>
+      </div>
     </div>
   );
 }
