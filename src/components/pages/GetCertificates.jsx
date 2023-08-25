@@ -34,17 +34,17 @@ function GetCertificates() {
         </Button>
       </div>
       <div className="flex justify-center">
-        <Card className="h-full w-[90%] mt-10 overflow-hidden">
+        <Card className="h-full w-[80%] mt-10 overflow-hidden">
           <table className="w-full min-w-max table-auto text-left">
             <tbody>
-              {TABLE_ROWS.map(({ name, job, date }, index) => {
+              {TABLE_ROWS.map(({ name }, index) => {
                 const isLast = index === TABLE_ROWS.length - 1;
                 const classes =
                   (isLast ? "p-4" : "p-4 border-b border-blue-gray-50") +
-                  " flex items-center";
+                  " flex items-center hover:bg-gray-200 cursor-pointer px-5";
 
                 return (
-                  <tr key={name}>
+                  <tr key={index}>
                     <td className={classes}>
                       <div className="mr-2">
                         <i className="fas fa-file-pdf text-red-500 mr-1"></i>
@@ -56,6 +56,9 @@ function GetCertificates() {
                       >
                         {name}
                       </Typography>
+                      <div className="ml-auto">
+                        <i className="fas fa-ellipsis-vertical text-gray-400"></i>
+                      </div>
                     </td>
                   </tr>
                 );

@@ -45,7 +45,7 @@ function Header() {
         color="white"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <a href="/" className="flex items-center">
           Home
         </a>
       </Typography>
@@ -55,7 +55,7 @@ function Header() {
         color="white"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <a href="/about-us" className="flex items-center">
           About Us
         </a>
       </Typography>
@@ -65,8 +65,8 @@ function Header() {
         color="white"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
-          Credentials
+        <a href="/get" className="flex items-center">
+          Certificates
         </a>
       </Typography>
       <Typography
@@ -75,7 +75,7 @@ function Header() {
         color="white"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <a href="/guide" className="flex items-center">
           Guide
         </a>
       </Typography>
@@ -91,7 +91,7 @@ function Header() {
       <div className="container mx-auto flex items-center justify-between white">
         <Typography
           as="a"
-          href="#"
+          href="/"
           className="mr-4 cursor-pointer py-1.5 font-medium"
         >
           ChainCertify
