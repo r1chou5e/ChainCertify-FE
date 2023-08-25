@@ -6,15 +6,43 @@ import {
   Button,
   Textarea,
   Checkbox,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Spinner,
 } from "@material-tailwind/react";
 
 const IssueCertificates = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [gasFee, setGasFee] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUploadFile = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
+
+  const openModal = () => {
+    if (gasFee === 0) {
+      setIsLoading(true); // Hiển thị spinner
+
+      setTimeout(() => {
+        setIsLoading(false); // Ẩn spinner
+        setGasFee(
+          selectedFile
+            ? ((selectedFile.size / (1024 * 1024)) * 0.01).toFixed(5)
+            : 0
+        );
+        setShowModal(true);
+      }, 3000);
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const closeModal = () => setShowModal(false);
 
   return (
     <div className="flex-col w-full">
@@ -102,12 +130,42 @@ const IssueCertificates = () => {
                 </Typography>
               }
             />
-            <Button color="blue" className="m-2">
-              Confirm
+            <Button color="blue" className="m-2" onClick={openModal}>
+              {isLoading ? <Spinner className="h-4 w-4" /> : "Execute"}
             </Button>
           </Card>
         </div>
       </div>
+      <Dialog open={showModal} handler={closeModal}>
+        <DialogHeader>Your attention is required!</DialogHeader>
+        <DialogBody divider>
+          <div className="flex flex-col items-center mb-3">
+            <i className="fab fa-ethereum text-[60px] text-blue-gray-800 mr-2"></i>
+            <Typography color="black" variant="h5" className="py-3">
+              Your certificate file costs{" "}
+              <span className="text-red-500">{gasFee} ETH</span> to store !
+            </Typography>
+            <p className="text-gray-600">
+              This cost depends on your file size, current gas fee and another
+              conditions. If you confirm to issue this certificate, the cost
+              will be deducted directly from your wallet.
+            </p>
+          </div>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={closeModal}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button variant="gradient" onClick={closeModal}>
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 };
