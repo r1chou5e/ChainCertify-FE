@@ -1,5 +1,8 @@
 import React from "react";
 import HomeCard from "./display/HomeCard";
+import {
+    Typography,
+  } from "@material-tailwind/react";
 
 const introduction = [
     {
@@ -30,13 +33,23 @@ const introduction = [
 
 function Home () {
     return (
-        <div className="flex justify-evenly">
+        <div className="mt-10">
+            <div className='flex flex-col text-center pb-9'>
+                <Typography variant="h1">Hello, User !</Typography>
+                <Typography variant="lead">
+                    Welcome back to your blockchain-certified achievements.
+                    <br />
+                    Your journey, secured on the blockchain, awaits your exploration.
+                </Typography>
+            </div>
+            <div className="flex justify-evenly">
             {introduction.map((instance) => 
                 <HomeCard
                     title={instance.title}
                     description={instance.description}
                     button={instance.button}
             />)}
+        </div>
         </div>
     )
 }
