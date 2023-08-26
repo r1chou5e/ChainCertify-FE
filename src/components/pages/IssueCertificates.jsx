@@ -13,6 +13,7 @@ import {
   Spinner,
   Select,
   Option,
+  Alert,
 } from "@material-tailwind/react";
 
 const IssueCertificates = () => {
@@ -20,6 +21,8 @@ const IssueCertificates = () => {
   const [gasFee, setGasFee] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [curInst, setCurInst] = useState("uit");
   const certificateTypes = [
     {
@@ -54,20 +57,25 @@ const IssueCertificates = () => {
   };
 
   const openModal = () => {
-    if (gasFee === 0) {
-      setIsLoading(true); // Hiển thị spinner
+    if (isChecked) {
+      if (gasFee === 0) {
+        setIsLoading(true); // Hiển thị spinner
 
-      setTimeout(() => {
-        setIsLoading(false); // Ẩn spinner
-        setGasFee(
-          selectedFile
-            ? ((selectedFile.size / (1024 * 1024)) * 0.01).toFixed(5)
-            : 0
-        );
+        setTimeout(() => {
+          setIsLoading(false); // Ẩn spinner
+          setGasFee(
+            selectedFile
+              ? ((selectedFile.size / (1024 * 1024)) * 0.01).toFixed(5)
+              : 0
+          );
+          setShowModal(true);
+        }, 3000);
+      } else {
         setShowModal(true);
-      }, 3000);
+      }
     } else {
-      setShowModal(true);
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
     }
   };
 
@@ -101,7 +109,6 @@ const IssueCertificates = () => {
                 label="Owner Name"
                 icon={<i className="fas fa-user text-xs" />}
               />
-              <Textarea label="Purpose" />
               <Select label="Institution" onChange={handleSelectInstitution}>
                 {certificateTypes.map((item, index) => (
                   <Option value={item.institution}>{item.name}</Option>
@@ -116,6 +123,7 @@ const IssueCertificates = () => {
                     </Option>
                   ))}
               </Select>
+              <Textarea label="Purpose" />
             </div>
           </Card>
           <Card
@@ -151,7 +159,7 @@ const IssueCertificates = () => {
             </div>
           </Card>
         </div>
-        <div className="mt-5 w-full flex justify-center">
+        <div className="mt-5 w-full flex justify-center relative">
           <Card className="p-2 w-[63%] flex flex-row justify-between">
             <Checkbox
               label={
@@ -168,7 +176,31 @@ const IssueCertificates = () => {
                   .
                 </Typography>
               }
+              onClick={() => setIsChecked(true)}
             />
+            <div
+              className={`fixed inset-0 flex items-start justify-end m-7 ${
+                showAlert ? "z-50" : "z-0"
+              } transition-opacity duration-300 ${
+                showAlert
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <Alert
+                open={showAlert}
+                color="red"
+                onClose={() => setShowAlert(false)}
+                className="w-[50%]"
+                icon={<i className="fas fa-exclamation-triangle text-xs" />}
+                animate={{
+                  mount: { y: 0 },
+                  unmount: { y: 100 },
+                }}
+              >
+                You have to agree with our terms and conditions.
+              </Alert>
+            </div>
             <Button color="blue" className="m-2" onClick={openModal}>
               {isLoading ? <Spinner className="h-4 w-4" /> : "Execute"}
             </Button>
