@@ -21,6 +21,7 @@ const IssueCertificates = () => {
   const [gasFee, setGasFee] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isConfirmLoading, setIsConfirmLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [curInst, setCurInst] = useState("uit");
@@ -75,11 +76,19 @@ const IssueCertificates = () => {
       }
     } else {
       setShowAlert(true);
-      setTimeout(() => setShowAlert(false), 3000);
+      setTimeout(() => setShowAlert(false), 5000);
     }
   };
 
   const closeModal = () => setShowModal(false);
+
+  const handleConfirm = () => {
+    setIsConfirmLoading(true);
+    setTimeout(() => {
+      setIsConfirmLoading(false);
+      window.location.href = "/pending";
+    }, 2000);
+  };
 
   return (
     <div className="flex-col w-full">
@@ -179,7 +188,7 @@ const IssueCertificates = () => {
               onClick={() => setIsChecked(true)}
             />
             <div
-              className={`fixed inset-0 flex items-start justify-end m-7 ${
+              className={`fixed inset-0 flex items-start justify-end m-5 ${
                 showAlert ? "z-50" : "z-0"
               } transition-opacity duration-300 ${
                 showAlert
@@ -232,8 +241,8 @@ const IssueCertificates = () => {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" onClick={closeModal}>
-            <span>Confirm</span>
+          <Button variant="gradient" onClick={handleConfirm}>
+            {isConfirmLoading ? <Spinner className="h-4 w-4" /> : "Confirm"}
           </Button>
         </DialogFooter>
       </Dialog>

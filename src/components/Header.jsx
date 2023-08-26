@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   MobileNav,
@@ -9,7 +9,8 @@ import {
 import Metamask from "../assets/icons/metamask.svg";
 
 function Header() {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
 
   const connectWallet = async () => {
     try {
@@ -21,7 +22,8 @@ function Header() {
         });
 
         // accounts[0] chứa địa chỉ Ethereum của người dùng sau khi kết nối thành công
-        console.log("Connected with address:", accounts[0]);
+        setWalletAddress(accounts[0]);
+        console.log("Connected with address:", walletAddress);
       } else {
         console.log("MetaMask is not available.");
       }
@@ -102,8 +104,17 @@ function Header() {
           className="flex items-center gap-3 rounded-full"
           onClick={connectWallet}
         >
-          <img src={Metamask} alt="metamask" className="h-6 w-6" />
-          Connect Wallet
+          {walletAddress !== "" ? (
+            <>
+              <span>{walletAddress.substring(0,15)}...</span>
+              <img src={Metamask} alt="metamask" className="h-6 w-6" />
+            </>
+          ) : (
+            <>
+              <img src={Metamask} alt="metamask" className="h-6 w-6" />
+              <span>Connect Wallet</span>
+            </>
+          )}
         </Button>
         <IconButton
           variant="text"
