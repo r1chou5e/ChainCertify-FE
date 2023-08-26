@@ -13,11 +13,11 @@ import {
   DialogFooter,
   Spinner,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const TABLE_ROWS = [
   {
-    name: "TOEIC Certificates - 2012",
+    name: "TOEIC Certificates - 2018",
     address: "0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c",
   },
   {
@@ -108,7 +108,12 @@ function GetCertificates() {
                     ` flex items-center hover:bg-gray-200 cursor-pointer px-5`;
 
                   return (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      onClick={() => {
+                        window.location.href = "/get/" + address;
+                      }}
+                    >
                       <td className={classes}>
                         <div className="mr-2">
                           <i className="fas fa-file-pdf text-red-500 mr-1"></i>
@@ -135,6 +140,7 @@ function GetCertificates() {
                                 <Link
                                   to={`/share/${address}`}
                                   className="flex flex-row"
+                                  onClick={(e) => e.stopPropagation()}
                                 >
                                   <div className="my-auto">
                                     <i className="fas fa-share text-blue-gray-500 mr-1"></i>

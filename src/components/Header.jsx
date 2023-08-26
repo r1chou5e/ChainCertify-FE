@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   MobileNav,
@@ -12,6 +12,18 @@ function Header() {
   const [openNav, setOpenNav] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
 
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false)
+    );
+
+    const savedWalletAddress = localStorage.getItem("walletAddress");
+    if (savedWalletAddress) {
+      setWalletAddress(savedWalletAddress);
+    }
+  }, []);
+
   const connectWallet = async () => {
     try {
       // Kiểm tra xem Ethereum Provider có khả dụng không
@@ -23,6 +35,7 @@ function Header() {
 
         // accounts[0] chứa địa chỉ Ethereum của người dùng sau khi kết nối thành công
         setWalletAddress(accounts[0]);
+        localStorage.setItem("walletAddress", accounts[0]);
         console.log("Connected with address:", walletAddress);
       } else {
         console.log("MetaMask is not available.");
@@ -106,7 +119,7 @@ function Header() {
         >
           {walletAddress !== "" ? (
             <>
-              <span>{walletAddress.substring(0,15)}...</span>
+              <span>{walletAddress.substring(0, 15)}...</span>
               <img src={Metamask} alt="metamask" className="h-6 w-6" />
             </>
           ) : (

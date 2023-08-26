@@ -24,13 +24,14 @@ const RevokeCertificate = () => {
     show: false,
     message: "",
   });
+  const [isConfirmLoading, setIsConfirmLoading] = useState(false);
   const [certChecked, setCertChecked] = useState(false);
   const validKey = "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4";
   const [icon, setIcon] = useState({
     title: "key",
     color: "gray",
   });
-  const gasFee = 0.001;
+  const gasFee = 0.0001;
   const certificateTypes = [
     {
       institution: "uit",
@@ -112,6 +113,14 @@ const RevokeCertificate = () => {
         setShowModal(true);
       }
     }
+  };
+
+  const handleConfirm = () => {
+    setIsConfirmLoading(true);
+    setTimeout(() => {
+      setIsConfirmLoading(false);
+      window.location.href = "/pending";
+    }, 2000);
   };
 
   return (
@@ -237,8 +246,8 @@ const RevokeCertificate = () => {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" onClick={closeModal}>
-            <span>Confirm</span>
+          <Button variant="gradient" onClick={handleConfirm}>
+            {isConfirmLoading ? <Spinner className="h-4 w-4" /> : "Confirm"}
           </Button>
         </DialogFooter>
       </Dialog>

@@ -7,6 +7,8 @@ import IssueCertificates from "./components/pages/IssueCertificates";
 import RevokeCertificate from "./components/pages/RevokeCertificate";
 import ShareCertificate from "./components/pages/ShareCertificate";
 import PendingVerify from "./components/pages/PendingVerify";
+import CertificateDetail from "./components/pages/CertificateDetail";
+import pdfUrl from "./assets/pdf/toeic.pdf";
 
 function App() {
   return (
@@ -20,6 +22,10 @@ function App() {
           <Route path="/revoke" element={<RevokeCertificate />} />
           <Route path="/share/:address?" element={<ShareCertificate />} />
           <Route path="/pending" element={<PendingVerify />} />
+          <Route
+            path="/get/:address"
+            element={<CertificateDetail pdfUrl={pdfUrl} />}
+          />
         </Routes>
       </div>
     </div>
