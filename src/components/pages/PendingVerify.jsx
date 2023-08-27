@@ -12,7 +12,7 @@ const PendingVerify = () => {
         <Typography variant="lead">
           The verification process may take approximately 1 to 2 hours.
           <br />
-          Please wait until the certificate is confirmed and fully stored on the
+          Please wait until the certificate is confirmed and mutate on
           blockchain.
         </Typography>
       </div>

@@ -7,6 +7,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import Metamask from "../assets/icons/metamask.svg";
+import Logo from "../assets/images/logo.png";
 
 function Header() {
   const [openNav, setOpenNav] = useState(false);
@@ -109,7 +110,7 @@ function Header() {
           href="/"
           className="mr-4 cursor-pointer py-1.5 font-medium"
         >
-          ChainCertify
+          <img src={Logo} alt="Logo" className="h-8 w-auto" />
         </Typography>
         <div className="hidden lg:block">{navList}</div>
         <Button

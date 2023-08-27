@@ -12,7 +12,10 @@ const CertificateDetail = ({ pdfUrl }) => {
     <div className="m-7">
       <div className="flex flex-col self-center">
         <Typography variant="h3">TOEIC Certificates - 2018</Typography>
-        <p>Address: 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c</p>
+        <p className="text-gray-600 text-sm">
+          Address: 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c
+        </p>
+        <p className="text-gray-600 text-sm">Timestamp: 2023/08/15 11:20:33</p>
       </div>
       <div>
         <Document
