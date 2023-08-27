@@ -14,12 +14,14 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { useParams } from "react-router-dom";
 
 const RevokeCertificate = () => {
+  const { address } = useParams();
   const [curInst, setCurInst] = useState("uit");
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [certPubKey, setCertPubKey] = useState("");
+  const [certPubKey, setCertPubKey] = useState(address || "");
   const [showAlert, setShowAlert] = useState({
     show: false,
     message: "",
@@ -31,7 +33,9 @@ const RevokeCertificate = () => {
     title: "key",
     color: "gray",
   });
-  const gasFee = 0.0001;
+  const [gasFee, setGasFee] = useState(
+    (0.0001 + Math.random() * (0.001 - 0.0001)).toFixed(10)
+  );
   const certificateTypes = [
     {
       institution: "uit",
@@ -156,6 +160,7 @@ const RevokeCertificate = () => {
                   />
                 }
                 onChange={(event) => setCertPubKey(event.target.value)}
+                value={certPubKey}
               />
               <Button onClick={handleCheck}>
                 {isLoading ? <Spinner className="h-4 w-4" /> : "Check"}
@@ -175,20 +180,6 @@ const RevokeCertificate = () => {
                 </Typography>
               </div>
             )}
-            <Select label="Institution" onChange={handleSelectInstitution}>
-              {certificateTypes.map((item, index) => (
-                <Option value={item.institution}>{item.name}</Option>
-              ))}
-            </Select>
-            <Select label="Certificate Type">
-              {certificateTypes
-                .find((item) => item.institution === curInst)
-                ?.types.map((type, index) => (
-                  <Option key={index} value={type}>
-                    {type}
-                  </Option>
-                ))}
-            </Select>
             <Textarea label="Why Revoke ?" />
             <div className="flex justify-end">
               <Button color="red" onClick={handleExecute}>

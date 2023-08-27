@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/get" element={<GetCertificates />} />
           <Route path="/issue" element={<IssueCertificates />} />
-          <Route path="/revoke" element={<RevokeCertificate />} />
+          <Route path="/revoke/:address?" element={<RevokeCertificate />} />
           <Route path="/share/:address?" element={<ShareCertificate />} />
           <Route path="/pending" element={<PendingVerify />} />
           <Route

@@ -172,16 +172,22 @@ function GetCertificates() {
                                 </Typography>
                               </MenuItem>
                               <MenuItem className="flex flex-row">
-                                <div className="my-auto">
-                                  <i className="fas fa-rotate-left text-red-500 mr-1"></i>
-                                </div>
-                                <Typography
-                                  variant="small"
-                                  color="red"
-                                  className="font-normal pl-2"
+                                <Link
+                                  to={`/revoke/${address}`}
+                                  className="flex flex-row"
+                                  onClick={(e) => e.stopPropagation()}
                                 >
-                                  Revoke
-                                </Typography>
+                                  <div className="my-auto">
+                                    <i className="fas fa-rotate-left text-red-500 mr-1"></i>
+                                  </div>
+                                  <Typography
+                                    variant="small"
+                                    color="red"
+                                    className="font-normal pl-2"
+                                  >
+                                    Revoke
+                                  </Typography>
+                                </Link>
                               </MenuItem>
                             </MenuList>
                           </Menu>

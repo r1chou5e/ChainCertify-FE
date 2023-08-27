@@ -21,6 +21,7 @@ const ShareCertificate = () => {
   const [curInst, setCurInst] = useState("uit");
   const [isUserLoading, setIsUserLoading] = useState(false);
   const [isCertLoading, setIsCertLoading] = useState(false);
+  const [isConfirmLoading, setIsConfirmLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [certPubKey, setCertPubKey] = useState(address || "");
   const [userAddress, setUserAddress] = useState("");
@@ -30,8 +31,11 @@ const ShareCertificate = () => {
   });
   const [certChecked, setCertChecked] = useState(false);
   const [userChecked, setUserChecked] = useState(false);
-  const validKey = "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4";
-  const validUser = "0x8F9a7B6c5D4e3F2a1BcDeAb98C76Ef54d32E1F0a";
+  const validKey = [
+    "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
+    "0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c",
+  ];
+  const validUser = ["0x8F9a7B6c5D4e3F2a1BcDeAb98C76Ef54d32E1F0a"];
   const [certIcon, setCertIcon] = useState({
     title: "file",
     color: "gray",
@@ -40,7 +44,9 @@ const ShareCertificate = () => {
     title: "user",
     color: "gray",
   });
-  const gasFee = 0.001;
+  const [gasFee, setGasFee] = useState(
+    (0.0001 + Math.random() * (0.001 - 0.0001)).toFixed(10)
+  );
   const certificateTypes = [
     {
       institution: "uit",
@@ -71,11 +77,11 @@ const ShareCertificate = () => {
   };
 
   const checkValid = (pubKey) => {
-    return pubKey === validKey;
+    return validKey.includes(pubKey);
   };
 
   const checkUser = (address) => {
-    return validUser === address;
+    return validUser.includes(address);
   };
 
   const handleCertCheck = () => {
@@ -148,6 +154,14 @@ const ShareCertificate = () => {
     }
   };
 
+  const handleConfirm = () => {
+    setIsConfirmLoading(true);
+    setTimeout(() => {
+      setIsConfirmLoading(false);
+      window.location.href = "/pending";
+    }, 2000);
+  };
+
   return (
     <div className="flex-col w-full">
       <div className="flex flex-col text-center py-10 pb-1">
@@ -207,7 +221,7 @@ const ShareCertificate = () => {
                   color="blue-gray"
                   className="font-normal pl-2"
                 >
-                  Cisco Certified Network Associate
+                  TOEIC Certificates - 2018
                 </Typography>
               </div>
             )}
@@ -264,13 +278,12 @@ const ShareCertificate = () => {
           <div className="flex flex-col items-center mb-3">
             <i className="fab fa-ethereum text-[60px] text-blue-gray-800 mr-2"></i>
             <Typography color="black" variant="h5" className="py-3">
-              Your revocation request costs{" "}
+              Your share request costs{" "}
               <span className="text-red-500">{gasFee} ETH</span> to execute !
             </Typography>
             <p className="text-gray-600">
-              Once you have revoked this certificate, it will become{" "}
-              <span className="font-bold">invalid</span>, and you will no longer
-              be able to use it
+              Once you have shared this certificate, the information of
+              certificate can be visible to receiver
             </p>
           </div>
         </DialogBody>
@@ -283,8 +296,8 @@ const ShareCertificate = () => {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" onClick={closeModal}>
-            <span>Confirm</span>
+          <Button variant="gradient" onClick={handleConfirm}>
+            {isConfirmLoading ? <Spinner className="h-4 w-4" /> : "Confirm"}
           </Button>
         </DialogFooter>
       </Dialog>
